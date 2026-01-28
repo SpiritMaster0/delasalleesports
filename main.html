@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>School Esports</title>
+
+<link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div id="bg"><canvas id="bgCanvas"></canvas></div>
+
+<nav>
+  <div><strong>Spartan ESPORTS</strong></div>
+  <div>
+    <a href="#" id="homeBtn">Home</a>
+    <a href="#" id="teamNav">Team</a>
+    <a href="#" id="matchesBtn">Matches</a>
+  </div>
+</nav>
+
+<header>
+  <div class="hero">
+    <h1>De La Salle Esports</h1>
+    <p>Concord, California</p>
+    <button id="enterBtn">About the Program</button>
+    <button id="matchesBtn2">Upcoming Matches</button>
+  </div>
+</header>
+
+<!-- Overview panel: dynamically populated -->
+<div id="overviewPanel">
+  <h2 style="color:var(--green)">Program Overview</h2>
+  <div class="cards" id="overviewCards"></div>
+</div>
+
+<div id="matchesPanel">
+  <h2 style="color:var(--green)">Upcoming & Past Matches</h2>
+
+  <div class="matches-container">
+    <div class="featured-match" id="featuredMatch"></div>
+    <div class="side-matches" id="sideMatches"></div>
+  </div>
+</div>
+
+<section id="teamSection" class="panel">
+  <h2 style="color:var(--green)">Our Team</h2>
+  <div id="teamCards" class="cards"></div>
+</section>
+
+
+
+<section>
+  <h2 style="color:var(--green)">Our Games</h2>
+  <br>
+  <div class="cards">
+    <div class="card"><h3>Smash Bros</h3><p>Competitive ladder and rankings.</p></div>
+    <div class="card"><h3>Valorant</h3><p>5v5 tactical FPS squad.</p></div>
+  </div>
+</section>
+
+<footer>
+  © De La Salle Esports
+</footer>
+
+<script src="main.js"></script>
+
+</body>
+</html>
