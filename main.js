@@ -169,38 +169,58 @@ matchesBtn2.addEventListener("click", () => {
 // Fetch matches from Sheet
 const featured = document.getElementById("featuredMatch");
 const sideWrap = document.getElementById("sideMatches");
-const MATCH_URL = `https://opensheet.elk.sh/${SHEET_ID}/Matches`;
-const TEAM_ID = "c537f1f5-ebe0-4b7e-bf20-0826620ee6d0";
-const DEFAULT_MATCH_TIME = "Thursday · 4:15 PM";
-const PLAYVS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBj11NfIdPl4-9cjv0ILRbuvCMI9zATOBoxioRnC42x4v0i4fPOlqdeUjGHk7rwHdTn7vghl7WZ3i2/pub?output=csv";
+const SCHOOL_ID = "c537f1f5-ebe0-4b7e-bf20-0826620ee6d0";
+const CSV_URL = "https://docs.google.com/spreadsheets/d/1HF0A4ja7ELz-Iksq1iRqUqYwRwhO0nZevUxBHvWRmjw/export?exportFormat=csv&gid=1106193519";
+const YOUR_NAME = "DE LA SALLE HIGH SCHOOL";
+const CURRENT_WEEK = 6; // this could also be read from the sheet
 
+fetch(CSV_URL)
+  .then(res => res.text())
+  .then(csvText => {
+    const data = Papa.parse(csvText, { header: true }).data;
 
-fetch(MATCH_URL)
-  .then(res => res.json())
-  .then(data => {
-    // Sort by date descending (most recent first)
-    data.sort((a,b) => new Date(b.date) - new Date(a.date));
+    // Filter for your school only
+    const schoolMatches = data.filter(row =>
+      row["Team 1 ID"] === SCHOOL_ID || row["Team 2 ID"] === SCHOOL_ID
+    );
 
-    // Featured match
-    const top = data[0];
-    featured.innerHTML = `
-      <h3>${top.title}</h3>
-      <p><strong>Date:</strong> ${top.date}</p>
-      <p><strong>Time:</strong> ${top.time}</p>
-      <p>${top.description || ""}</p>
-      ${top.image ? `<img src="${top.image}" style="width:100%; border-radius:12px; margin-top:10px;" />` : ""}
-    `;
+    // Convert Week to number for sorting
+    schoolMatches.forEach(row => {
+      row.weekNum = parseInt(row.Week.replace(/\D/g,"")) || 0;
+    });
 
-    // Side matches (rest)
+    // Sort ascending by week
+    schoolMatches.sort((a,b) => a.weekNum - b.weekNum);
+
+    // Featured match = current week
+    const featuredMatch = schoolMatches.find(row => row.weekNum === CURRENT_WEEK);
+    if(featuredMatch){
+      const opponent = (featuredMatch["Team Name"] === YOUR_NAME) ? featuredMatch["Team Name.1"] : featuredMatch["Team Name"];
+      featured.innerHTML = `
+        <h3>${YOUR_NAME} vs ${opponent}</h3>
+        <p><strong>Week:</strong> ${featuredMatch.Week}</p>
+        <p><strong>Time:</strong> Thursday · 4:15 PM</p>
+      `;
+    }
+
+    // Upcoming matches = CurrentWeek + 1 or more
+    const upcomingMatches = schoolMatches.filter(row => row.weekNum > CURRENT_WEEK);
+    // Past matches = Week < CurrentWeek
+    const pastMatches = schoolMatches.filter(row => row.weekNum < CURRENT_WEEK);
+
+    // Combine past + upcoming (optional: style past differently)
+    const sideMatches = [...pastMatches, ...upcomingMatches];
+
     sideWrap.innerHTML = "";
-    data.slice(1).forEach((row,i) => {
+    sideMatches.forEach((row,i) => {
+      const opponent = (row["Team Name"] === YOUR_NAME) ? row["Team Name.1"] : row["Team Name"];
       const card = document.createElement("div");
       card.className = "card";
-      card.style.transitionDelay = `${i*0.05}s`; // optional stagger
+      card.style.transitionDelay = `${i*0.05}s`;
       card.innerHTML = `
-        <h3>${row.title}</h3>
-        <p><strong>Date:</strong> ${row.date}</p>
-        <p><strong>Time:</strong> ${row.time}</p>
+        <h3>${YOUR_NAME} vs ${opponent}</h3>
+        <p><strong>Week:</strong> ${row.Week}</p>
+        <p><strong>Time:</strong> Thursday · 4:15 PM</p>
       `;
       sideWrap.appendChild(card);
     });
@@ -385,10 +405,7 @@ function loadLeaderboard() {
     .catch(err => console.error("Failed to load leaderboard:", err));
 }
 
-// Initial load
 loadLeaderboard();
-
-// Optional: auto-refresh every 60s
 setInterval(loadLeaderboard, 60000);
 
 window.addEventListener("DOMContentLoaded", function() {
@@ -400,4 +417,3 @@ window.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
-
