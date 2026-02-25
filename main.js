@@ -391,5 +391,13 @@ loadLeaderboard();
 // Optional: auto-refresh every 60s
 setInterval(loadLeaderboard, 60000);
 
-
+window.addEventListener("DOMContentLoaded", function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("open") === "leaderboard") {
+        const leaderboardButton = document.getElementById("leaderboardNav");
+        if (leaderboardButton) {
+            leaderboardButton.click();
+        }
+    }
+});
 
