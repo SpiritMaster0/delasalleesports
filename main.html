@@ -19,6 +19,7 @@
     <a href="#" id="homeBtn">Home</a>
     <a href="#" id="teamNav">Team</a>
     <a href="#" id="matchesBtn">Matches</a>
+    <a href="#" id="leaderboardNav">Leaderboard</a>
   </div>
 </nav>
 
@@ -31,10 +32,19 @@
   </div>
 </header>
 
+<section id="fansSection">
+  <h2 style="color:var(--green)">Our Fans</h2>
+  <div class="fan-carousel">
+    <div id="fanCards" class="fan-track"></div>
+  </div>
+</section>
+
+
 <!-- Overview panel: dynamically populated -->
 <div id="overviewPanel">
   <h2 style="color:var(--green)">Program Overview</h2>
   <div class="cards" id="overviewCards"></div>
+  
 </div>
 
 <div id="matchesPanel">
@@ -46,9 +56,29 @@
   </div>
 </div>
 
+<!-- Leaderboard full-screen panel -->
+<div id="leaderboardPanel" class="panel">
+  <div class="panel-inner">
+    <h2 style="color:var(--green)">Smash Leaderboard</h2>
+    <div class="leaderboard">
+      <!-- Rows will populate here dynamically -->
+    </div>
+    <button id="leaderboardBack" class="backBtn">Back</button>
+  </div>
+</div>
+
 <section id="teamSection" class="panel">
   <h2 style="color:var(--green)">Our Team</h2>
   <div id="teamCards" class="cards"></div>
+</section>
+
+
+
+<section id="leaderboardSection" class="panel">
+  <h2 style="color:var(--green)">Smash Leaderboard</h2>
+  <div class="leaderboard">
+    <!-- Rows will be populated dynamically -->
+  </div>
 </section>
 
 
@@ -70,3 +100,4 @@
 
 </body>
 </html>
+
