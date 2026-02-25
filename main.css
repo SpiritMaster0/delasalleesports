@@ -388,7 +388,7 @@ body.show-leaderboard #teamSection {
 .leaderboard {
   max-width: 900px;
   margin: auto;
-  padding: 40px 30px;
+  padding: 40px 120px;
   border-radius: 18px;
   position: relative;
   overflow: hidden;
