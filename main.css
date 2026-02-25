@@ -275,6 +275,7 @@ body.show-team #teamSection {
 .team-card {
   text-align: center;
   transition: transform .3s ease, box-shadow .3s ease;
+  cursor: pointer;
 }
 /* TEAM ANIMATION */
 #teamSection .card {
@@ -294,4 +295,232 @@ body.show-team #teamSection .card {
 .team-card:hover {
   transform: translateY(-6px) scale(1.03);
   box-shadow: 0 30px 60px rgba(0,0,0,.7);
+}
+
+#fansSection {
+  padding: 80px 10vw;
+}
+
+.fan-carousel {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.fan-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.fan-track .card {
+  flex: 0 0 33.3333%;
+  padding: 8 8px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.fan-track .card img {
+  width: 80%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.fan-track .card h3,
+.fan-track .card p {
+  text-align: center;
+}
+
+.toggleInfoBtn {
+  margin-top:10px;
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  background:var(--green);
+  color:black;
+  cursor:pointer;
+}
+
+.team-card .extra-info {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: 
+    max-height .4s ease,
+    opacity .3s ease;
+  margin-top: 10px;
+  font-size: .9rem;
+  color: #cfcfcf;
+}
+
+.team-card.expanded .extra-info {
+  max-height: 300px;
+  opacity: 1;
+}
+
+/* Hide by default */
+#leaderboardSection {
+  opacity: 0;
+  transform: translateY(40px);
+  pointer-events: none;
+  transition: 0.5s ease;
+}
+
+/* Show when active */
+body.show-leaderboard #leaderboardSection {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Hide other panels when leaderboard active */
+body.show-leaderboard #overviewPanel,
+body.show-leaderboard #matchesPanel,
+body.show-leaderboard #teamSection {
+  display: none;
+}
+
+/* Leaderboard container with mural background */
+.leaderboard {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 30px;
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Animated mural background */
+.leaderboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("Images/smash-bros-mural.png") repeat-x;
+  background-size: auto 100%;
+  animation: muralScroll 20s linear infinite;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+/* Dark overlay for readability */
+.leaderboard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1;
+}
+
+/* Leaderboard rows */
+.lb-row {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: 60px 1fr 120px;
+  align-items: center;
+
+  margin: 14px 0;
+  padding: 14px 20px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(20,20,20,0.9),
+    rgba(10,10,10,0.85)
+  );
+
+  backdrop-filter: blur(4px);
+
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+
+  transition: 0.3s ease;
+}
+
+.lb-row:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 16px var(--green);
+}
+
+.lb-rank,
+.lb-name,
+.lb-score {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Rank + Score */
+.lb-rank {
+  font-weight: bold;
+  font-size: 20px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.lb-score {
+  text-align: right;
+  color: gold;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Podium Styling */
+.rank-1 { background: linear-gradient(90deg, gold, #aa8800); color: black; }
+.rank-2 { background: linear-gradient(90deg, silver, #888); color: black; }
+.rank-3 { background: linear-gradient(90deg, #cd7f32, #8b5a2b); color: black; }
+
+/* Scroll animation */
+@keyframes muralScroll {
+  from { background-position-x: 0; }
+  to { background-position-x: -1019px; }
+}
+
+/* Panel show/hide system */
+#leaderboardSection { opacity: 0; transform: translateY(40px); pointer-events: none; transition: 0.5s ease; }
+body.show-leaderboard #leaderboardSection { opacity: 1; transform: translateY(0); pointer-events: auto; }
+body.show-leaderboard #overviewPanel,
+body.show-leaderboard #matchesPanel,
+body.show-leaderboard #teamSection { display: none; }
+
+/* Full-screen panels */
+#leaderboardPanel {
+  position: fixed; /* takes over viewport */
+  inset: 0;
+  background: #111111d5; 
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(40px);
+  transition: 0.5s ease;
+  z-index: 999; /* above everything */
+  overflow-y: auto; /* scroll if needed */
+}
+
+/* Show panel */
+body.show-leaderboard #leaderboardPanel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Inner content */
+#leaderboardPanel .panel-inner {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 30px;
+  position: relative;
+}
+
+/* Back button */
+.backBtn {
+  margin-top: 20px;
+  padding: 10px 24px;
+  background: var(--green);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
