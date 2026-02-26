@@ -525,3 +525,60 @@ body.show-leaderboard #leaderboardPanel {
   font-weight: bold;
   cursor: pointer;
 }
+
+/* ============================= */
+/* 📱 MOBILE OPTIMIZATION       */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  /* Reduce outer padding */
+  .leaderboard {
+    padding: 30px 16px;
+    border-radius: 0;
+  }
+
+  /* Panel inner spacing */
+  #leaderboardPanel .panel-inner {
+    margin: 40px auto;
+    padding: 16px;
+  }
+
+  /* Stack layout tighter */
+  .lb-row {
+    grid-template-columns: 40px 1fr auto;
+    padding: 12px 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+  }
+
+  /* Bigger readable text */
+  .lb-rank {
+    font-size: 18px;
+  }
+
+  .lb-name {
+    font-size: 16px;
+  }
+
+  .lb-score {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Remove hover scale (no hover on phones) */
+  .lb-row:hover {
+    transform: none;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  }
+
+  /* Make back button full width */
+  .backBtn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+}
